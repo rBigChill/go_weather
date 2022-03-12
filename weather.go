@@ -4,19 +4,15 @@ import (
 	"fmt"
 	"log"
 	"net/http"
-)
-
-// Api endpoints
-const (
-	base = "https://api.weather.gov/"
+	"net/url"
 )
 
 // Make API call, response is returned
-func getRequest(inquiry string) *http.Response {
+func getRequest(url string) *http.Response {
 	// Create client
 	client := &http.Client{}
 	// Build request
-	req, err := http.NewRequest("GET", inquiry, nil)
+	req, err := http.NewRequest("GET", url, nil)
 	if err != nil {
 		log.Println(err)
 	}
@@ -31,6 +27,11 @@ func getRequest(inquiry string) *http.Response {
 }
 
 func main() {
-	resp := getRequest(base)
+	// Create url
+	url := url.URL{
+		Scheme: "https",
+		Host:   "api.weather.gov",
+	}
+	resp := getRequest(url.String())
 	fmt.Println(resp.Status)
 }
