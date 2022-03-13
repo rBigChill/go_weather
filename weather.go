@@ -8,19 +8,19 @@ import (
 )
 
 // Make API call, response is returned
-func getRequest(url string) *http.Response {
+func getRequest(url *url.URL) *http.Response {
 
 	// Create client
 	client := &http.Client{}
 
 	// Build request
-	request, err := http.NewRequest("GET", url, nil)
+	request, err := http.NewRequest("GET", url.String(), nil)
 	if err != nil {
 		log.Println(err)
 	}
 
 	// Add headers to request
-	req.Header.Add("User-Agent", "github.com/rBigChill")
+	request.Header.Add("User-Agent", "github.com/rBigChill")
 
 	// Make Request, Get Response
 	response, err := client.Do(request)
@@ -30,20 +30,29 @@ func getRequest(url string) *http.Response {
 	return response
 }
 
-func makeURL(endpoint string) string {
+// Create url
+func makeURL(endpoint string) *url.URL {
 
-	// Create url
-	url := url.URL{
+	url := &url.URL{
 		Scheme: "https",
 		Host:   "api.weather.gov",
+		Path:   endpoint,
 	}
-	response := getRequest(url.String())
+	return url
+}
+
+// Points endpoint
+func points() *http.Response {
+
+	endpoint := "points/32.5115,-94.7964"
+	url := makeURL(endpoint)
+	response := getRequest(url)
 	return response
 }
 
 func main() {
 
-	endpoint := "points"
-	response := makeURL(endpoint)
-	fmt.Println(response.Status)
+	response := points()
+	fmt.Println(response)
+
 }
