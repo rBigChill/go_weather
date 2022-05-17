@@ -44,6 +44,7 @@ func getRequest(url *url.URL) *http.Response {
 func main() {
 
 	endpoint := "points/32.5115,-94.7964"
+
 	url := makeURL(endpoint)
 	response := getRequest(url)
 	fmt.Println(response)
