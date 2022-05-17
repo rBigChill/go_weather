@@ -7,6 +7,16 @@ import (
 	"net/url"
 )
 
+// Create url
+func makeURL(endpoint string) *url.URL {
+	url := &url.URL{
+		Scheme: "https",
+		Host:   "api.weather.gov",
+		Path:   endpoint,
+	}
+	return url
+}
+
 // Make API call, response is returned
 func getRequest(url *url.URL) *http.Response {
 	// Create client
@@ -24,16 +34,6 @@ func getRequest(url *url.URL) *http.Response {
 		log.Println(err)
 	}
 	return response
-}
-
-// Create url
-func makeURL(endpoint string) *url.URL {
-	url := &url.URL{
-		Scheme: "https",
-		Host:   "api.weather.gov",
-		Path:   endpoint,
-	}
-	return url
 }
 
 // Points endpoint
