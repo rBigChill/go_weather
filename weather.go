@@ -41,13 +41,8 @@ func getRequest(url *url.URL) *http.Response {
 	return response
 }
 
-<<<<<<< HEAD
-// Points endpoint
-func points() *http.Response {
-=======
 func main() {
 
->>>>>>> f7db9f5f98a421290626ca9b446458bebe20b253
 	endpoint := "points/32.5115,-94.7964"
 	url := makeURL(endpoint)
 	response := getRequest(url)
