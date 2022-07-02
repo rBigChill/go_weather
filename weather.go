@@ -2,6 +2,7 @@ package main
 
 import (
 	"fmt"
+	"io"
 	"log"
 	"net/http"
 	"net/url"
@@ -47,6 +48,7 @@ func main() {
 
 	url := makeURL(endpoint)
 	response := getRequest(url)
-	fmt.Println(response)
+	b, _ := io.ReadAll(response.Body)
+	fmt.Println("%s", string(b))
 
 }
