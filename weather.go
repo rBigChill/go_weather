@@ -1,15 +1,13 @@
 package main
 
 import (
-	"fmt"
-	"io"
 	"log"
 	"net/http"
 	"net/url"
 )
 
-// Create url
-func makeURL(endpoint string) *url.URL {
+// Base url
+func baseURL(endpoint string) *url.URL {
 	url := &url.URL{
 		Scheme: "https",
 		Host:   "api.weather.gov",
@@ -18,37 +16,41 @@ func makeURL(endpoint string) *url.URL {
 	return url
 }
 
-// Make API call, response is returned
-func getRequest(url *url.URL) *http.Response {
-
-	// Create client
+// Create client
+func createClient() *http.Client {
 	client := &http.Client{}
+	return client
+}
 
-	// Build request
+// Build request
+func buildURL(url *url.URL) *http.Request {
 	request, err := http.NewRequest("GET", url.String(), nil)
 	if err != nil {
 		log.Println(err)
 	}
-
 	// Add headers to request
 	request.Header.Add("User-Agent", "github.com/rBigChill")
+	return request
+}
 
+// Make API call, response is returned
+func createRequest(endpoint *url.URL) *http.Response {
+	// Build request
+	request := buildURL(endpoint)
+
+	// Create client
+	client := createClient()
 	// Make Request, Store Response
 	response, err := client.Do(request)
 	if err != nil {
 		log.Println(err)
 	}
-
 	return response
 }
 
+func getRequest() {
+}
+
 func main() {
-
-	endpoint := "points/32.5115,-94.7964"
-
-	url := makeURL(endpoint)
-	response := getRequest(url)
-	b, _ := io.ReadAll(response.Body)
-	fmt.Println("%s", string(b))
 
 }
