@@ -23,24 +23,21 @@ func createClient() *http.Client {
 }
 
 // Build request
-func buildURL(url *url.URL) *http.Request {
+func buildRequest(url *url.URL) *http.Request {
 	request, err := http.NewRequest("GET", url.String(), nil)
 	if err != nil {
 		log.Println(err)
 	}
-	// Add headers to request
+	// Add Headers
 	request.Header.Add("User-Agent", "github.com/rBigChill")
 	return request
 }
 
-// Make API call, response is returned
-func createRequest(endpoint *url.URL) *http.Response {
-	// Build request
-	request := buildURL(endpoint)
-
-	// Create client
+// Make Request
+func makeRequest(request *http.Request) *http.Response {
+	// Create Client
 	client := createClient()
-	// Make Request, Store Response
+	// Make Request
 	response, err := client.Do(request)
 	if err != nil {
 		log.Println(err)
@@ -48,9 +45,14 @@ func createRequest(endpoint *url.URL) *http.Response {
 	return response
 }
 
-func getRequest() {
+// Make API call, response is returned
+func createRequestedType(endpoint *url.URL) *http.Response {
+	// Build request
+	request := buildRequest(endpoint)
+	// Make Request
+	response := makeRequest(request)
+	return response
 }
 
 func main() {
-
 }
