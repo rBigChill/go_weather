@@ -1,6 +1,8 @@
 package main
 
 import (
+	"fmt"
+	"io"
 	"log"
 	"net/http"
 	"net/url"
@@ -46,13 +48,19 @@ func makeRequest(request *http.Request) *http.Response {
 }
 
 // Make API call, response is returned
-func createRequestedType(endpoint *url.URL) *http.Response {
+func requestType(endpoint string) *http.Response {
+	// Create URL
+	url := baseURL(endpoint)
 	// Build request
-	request := buildRequest(endpoint)
+	request := buildRequest(url)
 	// Make Request
 	response := makeRequest(request)
 	return response
 }
 
 func main() {
+	endpoint := "glossary"
+	response := requestType(endpoint)
+	x, _ := io.ReadAll(response.Body)
+	fmt.Printf("%s", x)
 }
